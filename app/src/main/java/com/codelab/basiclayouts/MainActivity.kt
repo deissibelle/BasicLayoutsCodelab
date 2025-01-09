@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -44,6 +45,8 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Spa
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Alignment
@@ -278,18 +281,71 @@ fun MySootheAppPortrait() {
 @Composable
 private fun SootheNavigationRail(modifier: Modifier = Modifier) {
     // Implement composable here
+    NavigationRail(
+        modifier = modifier.padding(start = 8.dp, end = 8.dp),
+        containerColor = MaterialTheme.colorScheme.background,
+    ) {
+        Column(
+            modifier = modifier.fillMaxHeight(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            NavigationRailItem(
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.Spa,
+                        contentDescription = null
+                    )
+                },
+                label = {
+                    Text(stringResource(R.string.bottom_navigation_home))
+                },
+                selected = true,
+                onClick = {}
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            NavigationRailItem(
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.AccountCircle,
+                        contentDescription = null
+                    )
+                },
+                label = {
+                    Text(stringResource(R.string.bottom_navigation_profile))
+                },
+                selected = false,
+                onClick = {}
+            )
+        }
+    }
 }
 
 // Step: Landscape Mode
 @Composable
 fun MySootheAppLandscape(){
     // Implement composable here
+    MySootheTheme {
+        Row {
+            SootheNavigationRail()
+            HomeScreen()
+        }
+    }
+
 }
 
 // Step: MySoothe App
 @Composable
 fun MySootheApp() {
     // Implement composable here
+    MySootheTheme {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            Row {
+                SootheNavigationRail()
+                HomeScreen()
+            }
+        }
+    }
 }
 
 private val alignYourBodyData = listOf(
@@ -391,7 +447,7 @@ fun MySoothePortraitPreview() {
     MySootheAppPortrait()
 }
 
-@Preview(widthDp = 640, heightDp = 360)
+@Preview( showBackground = true, backgroundColor = 0xFFF5F0EE, widthDp = 640, heightDp = 360)
 @Composable
 fun MySootheLandscapePreview() {
     MySootheAppLandscape()
